@@ -93,7 +93,7 @@
                     <div class="collapse show" id="navbar-item1">
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
+                                <a class="nav-link" href="{{ route('products.index') }}">
                                     {{ __('Список') }}
                                 </a>
                             </li>

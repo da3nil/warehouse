@@ -52,7 +52,7 @@ class Product extends Model
 
     public function getTotalPriceAttribute()
     {
-        return $this->type()->price * $this->qty;
+        return $this->type->price * $this->qty;
     }
 
 }
