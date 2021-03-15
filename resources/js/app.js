@@ -34,10 +34,27 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
 //     }
 // });
 
+
+const api_token = 'jd9fh982h98dh9hd03hfh2hf2oi3hdioh23iooi2h3fio2hi2hf3io2i2';
+
 const productModal = new Vue({
+    api_key: '',
     el: '#productModal',
     data: {
         message: 'Привет, Vue!'
+    },
+    mounted() {
+        axios
+            .get('/api/V1/product', {
+                headers: {
+                    'Authorization': 'Bearer ' + api_token
+                }
+            })
+            .then(function (response) {
+                console.log(response)
+            })
+
+        console.log(this.info);
     }
 });
 

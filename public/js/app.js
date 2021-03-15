@@ -49872,10 +49872,22 @@ Vue.component('example-component', __webpack_require__(/*! ./components/ExampleC
 //     }
 // });
 
+var api_token = 'jd9fh982h98dh9hd03hfh2hf2oi3hdioh23iooi2h3fio2hi2hf3io2i2';
 var productModal = new Vue({
+  api_key: '',
   el: '#productModal',
   data: {
     message: 'Привет, Vue!'
+  },
+  mounted: function mounted() {
+    axios.get('/api/V1/product', {
+      headers: {
+        'Authorization': 'Bearer ' + api_token
+      }
+    }).then(function (response) {
+      console.log(response);
+    });
+    console.log(this.info);
   }
 });
 
