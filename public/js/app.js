@@ -49879,15 +49879,26 @@ var productModal = new Vue({
   data: {
     message: 'Привет, Vue!'
   },
-  mounted: function mounted() {
-    axios.get('/api/V1/product', {
-      headers: {
-        'Authorization': 'Bearer ' + api_token
+  methods: {
+    setTypeProduct: function setTypeProduct(event) {
+      var product_types = document.querySelectorAll('#form_product_type option');
+      var category_id = event.target.value;
+      var first_type = null;
+      product_types.forEach(function (item) {
+        item.removeAttribute('selected');
+
+        if (item.dataset.categoryId === category_id) {
+          first_type = item;
+          item.classList.remove('d-none');
+        } else {
+          item.classList.add('d-none');
+        }
+      });
+
+      if (first_type !== null) {
+        first_type.setAttribute('selected', 'selected');
       }
-    }).then(function (response) {
-      console.log(response);
-    });
-    console.log(this.info);
+    }
   }
 });
 

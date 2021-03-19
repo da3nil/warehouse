@@ -78,11 +78,11 @@
             </form>
             <!-- Navigation -->
             <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('home') }}">
-                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Аналитика') }}
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="{{ route('home') }}">--}}
+{{--                        <i class="ni ni-tv-2 text-primary"></i> {{ __('Аналитика') }}--}}
+{{--                    </a>--}}
+{{--                </li>--}}
 
                 <li class="nav-item">
                     <a class="nav-link active" href="#navbar-item1" data-toggle="collapse" role="button" aria-expanded="true" aria-controls="navbar-examples">
@@ -103,7 +103,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('categories.index') }}">
                                     {{ __('Категории') }}
                                 </a>
                             </li>
@@ -111,27 +111,27 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#navbar-item2" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
-                        <i class="fab fa-laravel" style="color: #f4645f;"></i>
-                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Отчеты') }}</span>
-                    </a>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#navbar-item2" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">--}}
+{{--                        <i class="fab fa-laravel" style="color: #f4645f;"></i>--}}
+{{--                        <span class="nav-link-text" style="color: #f4645f;">{{ __('Отчеты') }}</span>--}}
+{{--                    </a>--}}
 
-                    <div class="collapse" id="navbar-item2">
-                        <ul class="nav nav-sm flex-column">
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('profile.edit') }}">
-                                    {{ __('История') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Создать новый отчет') }}
-                                </a>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
+{{--                    <div class="collapse" id="navbar-item2">--}}
+{{--                        <ul class="nav nav-sm flex-column">--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link" href="{{ route('profile.edit') }}">--}}
+{{--                                    {{ __('История') }}--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                            <li class="nav-item">--}}
+{{--                                <a class="nav-link" href="{{ route('user.index') }}">--}}
+{{--                                    {{ __('Создать новый отчет') }}--}}
+{{--                                </a>--}}
+{{--                            </li>--}}
+{{--                        </ul>--}}
+{{--                    </div>--}}
+{{--                </li>--}}
 
                 <li class="nav-item">
                     <a class="nav-link" href="#navbar-examples" data-toggle="collapse" role="button" aria-expanded="false" aria-controls="navbar-examples">
@@ -155,26 +155,26 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-key-25 text-info"></i> {{ __('Login') }}
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}
-                    </a>
-                </li>
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">--}}
+{{--                        <i class="ni ni-planet text-blue"></i> {{ __('Icons') }}--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">--}}
+{{--                        <i class="ni ni-pin-3 text-orange"></i> {{ __('Maps') }}--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">--}}
+{{--                        <i class="ni ni-key-25 text-info"></i> {{ __('Login') }}--}}
+{{--                    </a>--}}
+{{--                </li>--}}
+{{--                <li class="nav-item">--}}
+{{--                    <a class="nav-link" href="#">--}}
+{{--                        <i class="ni ni-circle-08 text-pink"></i> {{ __('Register') }}--}}
+{{--                    </a>--}}
+{{--                </li>--}}
             </ul>
             <!-- Divider -->
             <hr class="my-3">

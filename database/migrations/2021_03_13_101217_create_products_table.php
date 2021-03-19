@@ -19,6 +19,7 @@ class CreateProductsTable extends Migration
             $table->unsignedBigInteger('status_id');
             $table->unsignedBigInteger('location_id');
             $table->integer('qty')->default(0);
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('type_id')->references('id')->on('product_types');

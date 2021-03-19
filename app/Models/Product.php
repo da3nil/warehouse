@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductType;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\Product
@@ -30,6 +31,15 @@ use App\Models\ProductType;
 class Product extends Model
 {
 
+    use SoftDeletes;
+
+    protected $fillable = [
+        'type_id',
+        'status_id',
+        'location_id',
+        'qty'
+    ];
+
     /**
      * Получить тип товара
      *
@@ -37,7 +47,7 @@ class Product extends Model
      */
     public function type()
     {
-        return $this->belongsTo(ProductType::class, 'type_id', 'id');
+        return $this->belongsTo(ProductType::class, 'type_id', 'id')->with(['category']);
     }
 
     public function status()

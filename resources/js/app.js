@@ -43,18 +43,29 @@ const productModal = new Vue({
     data: {
         message: 'Привет, Vue!'
     },
-    mounted() {
-        axios
-            .get('/api/V1/product', {
-                headers: {
-                    'Authorization': 'Bearer ' + api_token
-                }
-            })
-            .then(function (response) {
-                console.log(response)
-            })
+    methods: {
+        setTypeProduct: function (event) {
+            let product_types = document.querySelectorAll('#form_product_type option');
 
-        console.log(this.info);
+            let category_id = event.target.value;
+
+            let first_type = null;
+
+            product_types.forEach((item) => {
+                item.removeAttribute('selected');
+
+                if (item.dataset.categoryId === category_id) {
+                    first_type = item
+                    item.classList.remove('d-none')
+                } else {
+                    item.classList.add('d-none')
+                }
+            });
+
+            if (first_type !== null) {
+                first_type.setAttribute('selected', 'selected')
+            }
+        }
     }
 });
 

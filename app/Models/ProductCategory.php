@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 /**
  * App\Models\ProductCategory
@@ -22,5 +23,14 @@ use Illuminate\Database\Eloquent\Model;
  */
 class ProductCategory extends Model
 {
-    //
+    use SoftDeletes;
+
+    protected $fillable = [
+      'name'
+    ];
+
+    public function types()
+    {
+        return $this->hasMany(ProductType::class, 'category_id', 'id');
+    }
 }

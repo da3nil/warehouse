@@ -89,8 +89,12 @@ class ProductTableSeeder extends Seeder
             \App\Models\ProductType::create($type);
         }
 
-        foreach ($current as $item) {
-            \App\Models\Product::create($item);
+        for ($i = 0; $i < 1; $i++)
+        {
+            foreach ($current as $item) {
+                \App\Models\Product::create($item);
+            }
         }
+
     }
 }

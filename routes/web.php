@@ -14,12 +14,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect()
+        ->route('login');
 });
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/home', function () {
+    return redirect()
+        ->route('products.index');
+})->name('home');
 
 Route::group(['middleware' => 'auth'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
@@ -30,5 +34,8 @@ Route::group(['middleware' => 'auth'], function () {
 
 	// Products
     Route::resource('products', 'ProductController')->names('products');
+
+    // Categories
+    Route::resource('categories', 'ProductCategoryController')->names('categories');
 });
 

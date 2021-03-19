@@ -1,4 +1,4 @@
-@extends('layouts.app', ['title' => __('User Profile')])
+@extends('layouts.app', ['title' => __('Список товаров')])
 
 @section('content')
     @include('users.partials.header', [
@@ -15,16 +15,19 @@
                 <div class="modal-body p-0">
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-header bg-transparent">
-                            <div class="text-muted text-center mt-2 mb-3"><small>Добавить товар</small></div>
+                            <div class="text-muted text-center mt-2 mb-3">Добавить товар</div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form">
+                            <form role="form" action="{{ route('products.store') }}" method="post">
+                                @csrf
                                 <div class="form-group mb-3">
                                     <label for="example-text-input" class="form-control-label">Категория</label>
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <select class="form-control">
+                                        <select v-on:change="setTypeProduct" class="form-control" name="category_id">
                                             @foreach($product_categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @if(count($category->types) > 0)
+                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endif
                                             @endforeach
                                         </select>
                                     </div>
@@ -32,29 +35,48 @@
                                 <div class="form-group mb-3">
                                     <label for="example-text-input" class="form-control-label">Вид товара</label>
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <select class="form-control">
+                                        <select id="form_product_type" class="form-control" name="type_id">
                                             @foreach($product_types as $type)
-                                                <option value="{{ $type->id }}">{{ $type->name }}</option>
+                                                <option class="@if($type->category_id !== 1) d-none @endif" data-category-id="{{$type->category_id}}" value="{{ $type->id }}">{{ $type->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Количество</label>
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text"><i class="ni ni-lock-circle-open"></i></span>
-                                        </div>
-                                        <input class="form-control" placeholder="Password" type="password">
+                                        <input type="number" class="form-control" step="1" value="1" name="qty">
                                     </div>
                                 </div>
-                                <div class="custom-control custom-control-alternative custom-checkbox">
-                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">
-                                    <label class="custom-control-label" for=" customCheckLogin">
-                                        <span class="text-muted">Remember me</span>
-                                    </label>
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Местоположение</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <select class="form-control" name="location_id">
+                                            @foreach($locations as $location)
+                                                <option class="" value="{{ $location->id }}">{{ $location->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Статус</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <select class="form-control" name="status_id">
+                                            @foreach($statuses as $status)
+                                                <option class="" value="{{ $status->id }}">{{ $status->name }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
+                                </div>
+{{--                                <div class="custom-control custom-control-alternative custom-checkbox">--}}
+{{--                                    <input class="custom-control-input" id=" customCheckLogin" type="checkbox">--}}
+{{--                                    <label class="custom-control-label" for=" customCheckLogin">--}}
+{{--                                        <span class="text-muted">Remember me</span>--}}
+{{--                                    </label>--}}
+{{--                                </div>--}}
+
                                 <div class="text-center">
-                                    <button type="button" class="btn btn-primary my-4">Sign in</button>
+                                    <button type="submit" class="btn btn-primary my-4">Добавить товар</button>
                                 </div>
                             </form>
                         </div>
@@ -78,6 +100,26 @@
                         </div>
                     </div>
                     <div class="card-body">
+                        @if (session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text"><strong>{{ session('success') }}</strong></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <span class="alert-icon"><i class="ni ni-like-2"></i></span>
+                                <span class="alert-text"><strong>{{ $errors->first() }}</strong></span>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                        @endif
+
                         <div class="table-responsive">
                             <div>
                                 <table class="table align-items-center">
@@ -147,9 +189,17 @@
                                                     </a>
                                                     <div
                                                         class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="#">Action</a>
+                                                        <a class="dropdown-item" href="{{ route('products.edit', ['product' => $product->id]) }}">Изменить товар</a>
                                                         <a class="dropdown-item" href="#">Another action</a>
-                                                        <a class="dropdown-item" href="#">Something else here</a>
+                                                        <div class="" href="#">
+                                                            <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
+                                                                @method('DELETE')
+                                                                @csrf
+                                                                <button type="submit" class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
+                                                                    <span class="dropdown-item">Удалить товар</span>
+                                                                </button>
+                                                            </form>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </td>
@@ -159,8 +209,10 @@
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
+                            <div class="mt-5 d-flex justify-content-center">
+                                {{ $products->links() }}
+                            </div>
                     </div>
                 </div>
             </div>
