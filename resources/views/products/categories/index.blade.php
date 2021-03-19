@@ -109,7 +109,6 @@
                                                     <div
                                                         class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
                                                         <a class="dropdown-item" href="{{ route('categories.edit', ['category' => $category->id]) }}">Изменить категорию</a>
-                                                        <a class="dropdown-item" href="#">Another action</a>
                                                         <div class="" href="#">
                                                             <form action="{{ route('categories.destroy', ['category' => $category->id]) }}" method="post">
                                                                 @method('DELETE')

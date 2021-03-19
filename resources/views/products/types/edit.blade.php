@@ -1,9 +1,9 @@
-@extends('layouts.app', ['title' => __('Список товаров')])
+@extends('layouts.app', ['title' => __('Изменить тип товара')])
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Изменить товар'),
-        'description' => __('Это страница товара. Тут вы можете изменить изменить свойства товара или удалить его.'),
+        'title' => __('Изменить тип товара'),
+        'description' => __('Это страница типа товара. Тут вы можете изменить изменить свойства типа товара или удалить его.'),
         'class' => 'col-lg-7'
     ])
 
@@ -13,13 +13,13 @@
                 <div class="card bg-secondary shadow">
                     <div class="card-header bg-white border-0">
                         <div class="row align-items-center">
-                            <h3 class="col-8 mb-0">{{ __('Товар') }}</h3>
+                            <h3 class="col-8 mb-0">{{ __('Вид товара') }}</h3>
                             <div class="col-4 text-right">
-                                <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
+                                <form action="{{ route('types.destroy', ['type' => $type->id]) }}" method="post">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-sm btn-danger" data-toggle="modal"
-                                            data-target="#productModal"> Удалить товар
+                                            data-target="#productModal"> Удалить вид товара
                                     </button>
                                 </form>
                             </div>
@@ -47,60 +47,49 @@
                             </div>
                         @endif
 
-                        <form role="form" action="{{ route('products.update', ['product' => $product->id]) }}" method="post">
+                        <form role="form" action="{{ route('types.update', ['type' => $type->id]) }}" method="post" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Название</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <input type="text" class="form-control" step="1" value="{{ $type->name }}" name="name">
+                                </div>
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="example-text-input" class="form-control-label">Категория</label>
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <select v-on:change="setTypeProduct" class="form-control" name="category_id">
                                         @foreach($product_categories as $category)
-                                            @if(count($category->types) > 0)
-                                                <option @if($product->type->category->id === $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-text-input" class="form-control-label">Вид товара</label>
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <select id="form_product_type" class="form-control" name="type_id">
-                                        @foreach($product_types as $type)
-                                            <option @if($product->type->id === $type->id) selected @endif class="@if($type->id !== $product->type->id) d-none @endif" data-category-id="{{$type->category_id}}" value="{{ $type->id }}">{{ $type->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-text-input" class="form-control-label">Количество</label>
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <input type="number" class="form-control" step="1" value="{{ $product->qty }}" name="qty">
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-text-input" class="form-control-label">Местоположение</label>
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <select class="form-control" name="location_id">
-                                        @foreach($locations as $location)
-                                            <option @if($product->location->id === $location->id) selected @endif class="" value="{{ $location->id }}">{{ $location->name }}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="form-group mb-3">
-                                <label for="example-text-input" class="form-control-label">Статус</label>
-                                <div class="input-group input-group-merge input-group-alternative">
-                                    <select class="form-control" name="status_id">
-                                        @foreach($statuses as $status)
-                                            <option @if($product->status->id === $status->id) selected @endif class="" value="{{ $status->id }}">{{ $status->name }}</option>
+                                            <option @if($category->id === $type->category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
 
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Цена (руб.)</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <input type="number" class="form-control" value="{{ $type->price }}" name="price">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Описание</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <textarea class="form-control" name="description">{{ $type->description }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Изображение</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <input type="file" class="form-control" name="img">
+                                </div>
+                            </div>
+
                             <div class="text-center">
-                                <button type="submit" class="btn btn-primary my-4">Изменить товар</button>
+                                <button type="submit" class="btn btn-primary my-4">Обновить вид товара</button>
                             </div>
                         </form>
                     </div>

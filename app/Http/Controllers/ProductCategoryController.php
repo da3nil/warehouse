@@ -110,7 +110,9 @@ class ProductCategoryController extends Controller
     {
         $category = ProductCategory::findOrFail($id);
 
-        if (!$category->delete()) {
+        $result = $category->delete();
+
+        if (!$result) {
             return back()
                 ->withErrors(['msg' => 'Ошибка удаления категории']);
         }

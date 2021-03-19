@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\ProductCategory;
+use App\Models\ProductType;
+use App\Observers\ProductCategoryObserver;
+use App\Observers\ProductTypeObserver;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -29,6 +33,7 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        //
+        ProductCategory::observe(ProductCategoryObserver::class);
+        ProductType::observe(ProductTypeObserver::class);
     }
 }

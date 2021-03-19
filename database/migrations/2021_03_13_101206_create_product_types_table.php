@@ -17,14 +17,15 @@ class CreateProductTypesTable extends Migration
             $table->id();
             $table->string('name')->default('Без названия');
             $table->integer('price')->default(0);
-            $table->string('img', 300)->default('storage/img/default-product.jpg');
+            $table->string('img', 300)->default('argon/img/default-product.jpg');
             $table->unsignedBigInteger('category_id');
-            $table->unsignedBigInteger('supplier_id');
+//            $table->unsignedBigInteger('supplier_id');
             $table->text('description');
+            $table->softDeletes();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('product_categories');
-            $table->foreign('supplier_id')->references('id')->on('suppliers');
+//            $table->foreign('supplier_id')->references('id')->on('suppliers');
         });
     }
 

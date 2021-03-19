@@ -18,7 +18,7 @@ Route::get('/', function () {
         ->route('login');
 });
 
-Auth::routes();
+Auth::routes(['register' => false]);
 
 Route::get('/home', function () {
     return redirect()
@@ -37,5 +37,8 @@ Route::group(['middleware' => 'auth'], function () {
 
     // Categories
     Route::resource('categories', 'ProductCategoryController')->names('categories');
+
+    // Types
+    Route::resource('types', 'ProductTypeController')->names('types');
 });
 

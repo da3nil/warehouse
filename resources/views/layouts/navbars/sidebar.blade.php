@@ -98,7 +98,7 @@
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
+                                <a class="nav-link" href="{{ route('types.index') }}">
                                     {{ __('Виды') }}
                                 </a>
                             </li>
@@ -144,11 +144,6 @@
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('profile.edit') }}">
                                     {{ __('Моя страница') }}
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" href="{{ route('user.index') }}">
-                                    {{ __('Настройки') }}
                                 </a>
                             </li>
                         </ul>

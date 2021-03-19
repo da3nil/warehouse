@@ -1,9 +1,9 @@
-@extends('layouts.app', ['title' => __('Список товаров')])
+@extends('layouts.app', ['title' => __('Список видов товаров')])
 
 @section('content')
     @include('users.partials.header', [
-        'title' => __('Список товаров'),
-        'description' => __('Это страница товаров. Тут вы можете просмотреть все существующие товары, их количество, стоимость, местоположение и так далее.'),
+        'title' => __('Список товарных типов'),
+        'description' => __('Это страница товарных типов. Тут вы можете просмотреть все существующие виды и добавить новые.'),
         'class' => 'col-lg-7'
     ])
 
@@ -15,62 +15,53 @@
                 <div class="modal-body p-0">
                     <div class="card bg-secondary border-0 mb-0">
                         <div class="card-header bg-transparent">
-                            <div class="text-muted text-center mt-2 mb-3">Добавить товар</div>
+                            <div class="text-muted text-center mt-2 mb-3">Добавить вид товара</div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" action="{{ route('products.store') }}" method="post">
+                            <form role="form" action="{{ route('types.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Название</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <input type="text" class="form-control" step="1" value="" name="name">
+                                    </div>
+                                </div>
+
                                 <div class="form-group mb-3">
                                     <label for="example-text-input" class="form-control-label">Категория</label>
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <select v-on:change="setTypeProduct" class="form-control" name="category_id">
                                             @foreach($product_categories as $category)
-                                                @if(count($category->types) > 0)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-control-label">Вид товара</label>
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <select id="form_product_type" class="form-control" name="type_id">
-                                            @foreach($product_types as $type)
-                                                <option class="@if($type->category_id !== $product_categories->first()->id) d-none @endif" data-category-id="{{$type->category_id}}" value="{{ $type->id }}">{{ $type->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-control-label">Количество</label>
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <input type="number" class="form-control" step="1" value="1" name="qty">
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-control-label">Местоположение</label>
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <select class="form-control" name="location_id">
-                                            @foreach($locations as $location)
-                                                <option class="" value="{{ $location->id }}">{{ $location->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
-                                </div>
-                                <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-control-label">Статус</label>
-                                    <div class="input-group input-group-merge input-group-alternative">
-                                        <select class="form-control" name="status_id">
-                                            @foreach($statuses as $status)
-                                                <option class="" value="{{ $status->id }}">{{ $status->name }}</option>
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
 
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Цена (руб.)</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <input type="number" class="form-control" value="" name="price">
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Описание</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <textarea class="form-control" name="description"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Изображение</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <input type="file" class="form-control" value="" name="img">
+                                    </div>
+                                </div>
+
                                 <div class="text-center">
-                                    <button type="submit" class="btn btn-primary my-4">Добавить товар</button>
+                                    <button type="submit" class="btn btn-primary my-4">Добавить вид</button>
                                 </div>
                             </form>
                         </div>
@@ -79,6 +70,7 @@
             </div>
         </div>
     </div>
+
     <div class="container-fluid mt--7">
         <div class="row">
             <div class="col-xl-12">
@@ -88,7 +80,7 @@
                             <h3 class="col-8 mb-0">{{ __('Список') }}</h3>
                             <div class="col-4 text-right">
                                 <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#productModal">Добавить товар
+                                        data-target="#productModal">Добавить вид товара
                                 </button>
                             </div>
                         </div>
@@ -119,50 +111,36 @@
                                 <table class="table align-items-center">
                                     <thead class="thead-light">
                                     <tr>
-                                        <th scope="col" class="sort" data-sort="name">{{ __('Товар') }}</th>
-                                        <th scope="col" class="sort" data-sort="name">{{ __('Количество') }}</th>
-                                        <th scope="col" class="sort"
-                                            data-sort="status">{{ __('Цена за единицу') }}</th>
-                                        <th scope="col" class="sort" data-sort="budget">{{ __('Сумма') }}</th>
-                                        <th scope="col" class="sort" data-sort="completion">{{ __('Статус') }}</th>
-                                        <th scope="col" class="sort"
-                                            data-sort="completion">{{ __('Местоположение') }}</th>
+                                        <th scope="col" class="sort" data-sort="name">{{ __('Вид товара') }}</th>
+                                        <th scope="col" class="sort" data-sort="name">{{ __('Категория') }}</th>
+                                        <th scope="col" class="sort" data-sort="name">{{ __('Цена за единицу') }}</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
                                     <tbody class="list">
-                                    @foreach($products as $product)
+                                    @foreach($types as $type)
                                         <tr>
                                             <th scope="row">
                                                 <div class="media align-items-center">
                                                     <a href="#" class="avatar rounded-circle mr-3">
                                                         <img alt="Image placeholder"
-                                                             src="{{ asset($product->type->img) }}">
+                                                             src="{{ asset($type->img) }}">
                                                     </a>
                                                     <div class="media-body">
                                                             <span
-                                                                class="name mb-0 text-sm">{{ $product->type->name }}</span>
+                                                                class="name mb-0 text-sm">{{ $type->name }}</span>
                                                     </div>
                                                 </div>
                                             </th>
+
                                             <td class="budget">
-                                                {{ $product->qty }} {{ __('шт.') }}
+                                                {{ $type->category->name }}
                                             </td>
+
                                             <td class="budget">
-                                                {{ $product->type->price }} {{ __('руб') }}
+                                                {{ $type->price }} руб.
                                             </td>
-                                            <td class="budget">
-                                                {{ $product->total_price}} {{ __('руб') }}
-                                            </td>
-                                            <td>
-                    <span class="badge badge-dot mr-4">
-                      <i class="bg-{{ $product->status->value }}"></i>
-                      <span class="status">{{ $product->status->name }}</span>
-                    </span>
-                                            </td>
-                                            <td class="budget">
-                                                {{ $product->location->name}}
-                                            </td>
+
                                             <td class="text-right">
                                                 <div class="dropdown">
                                                     <a class="btn btn-sm btn-icon-only text-light" href="#"
@@ -170,14 +148,15 @@
                                                        aria-haspopup="true" aria-expanded="false">
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
-                                                    <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="{{ route('products.edit', ['product' => $product->id]) }}">Изменить товар</a>
+                                                    <div
+                                                        class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        <a class="dropdown-item" href="{{ route('types.edit', ['type' => $type->id]) }}">Изменить вид товара</a>
                                                         <div class="" href="#">
-                                                            <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
+                                                            <form action="{{ route('types.destroy', ['type' => $type->id]) }}" method="post">
                                                                 @method('DELETE')
                                                                 @csrf
                                                                 <button type="submit" class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
-                                                                    <span class="dropdown-item">Удалить товар</span>
+                                                                    <span class="dropdown-item">Удалить вид товара</span>
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -190,10 +169,8 @@
                                     </tbody>
                                 </table>
                             </div>
+
                         </div>
-                            <div class="mt-5 d-flex justify-content-center">
-                                {{ $products->links() }}
-                            </div>
                     </div>
                 </div>
             </div>
