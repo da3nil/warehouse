@@ -37,7 +37,10 @@
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <select id="form_product_type" class="form-control" name="type_id">
                                             @foreach($product_types as $type)
-                                                <option class="@if($type->category_id !== $product_categories->first()->id) d-none @endif" data-category-id="{{$type->category_id}}" value="{{ $type->id }}">{{ $type->name }}</option>
+                                                <option
+                                                    class="@if($type->category_id !== $product_categories->first()->id) d-none @endif"
+                                                    data-category-id="{{$type->category_id}}"
+                                                    value="{{ $type->id }}">{{ $type->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -53,7 +56,8 @@
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <select class="form-control" name="location_id">
                                             @foreach($locations as $location)
-                                                <option class="" value="{{ $location->id }}">{{ $location->name }}</option>
+                                                <option class=""
+                                                        value="{{ $location->id }}">{{ $location->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
@@ -171,12 +175,17 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="{{ route('products.edit', ['product' => $product->id]) }}">Изменить товар</a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('products.edit', ['product' => $product->id]) }}">Изменить
+                                                            товар</a>
                                                         <div class="" href="#">
-                                                            <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
+                                                            <form
+                                                                action="{{ route('products.destroy', ['product' => $product->id]) }}"
+                                                                method="post">
                                                                 @method('DELETE')
                                                                 @csrf
-                                                                <button type="submit" class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
+                                                                <button type="submit"
+                                                                        class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
                                                                     <span class="dropdown-item">Удалить товар</span>
                                                                 </button>
                                                             </form>
@@ -191,9 +200,9 @@
                                 </table>
                             </div>
                         </div>
-                            <div class="mt-5 d-flex justify-content-center">
-                                {{ $products->links() }}
-                            </div>
+                        <div class="mt-5 d-flex justify-content-center">
+                            {{ $products->links() }}
+                        </div>
                     </div>
                 </div>
             </div>

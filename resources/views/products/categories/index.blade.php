@@ -127,8 +127,10 @@
                                     </tbody>
                                 </table>
                             </div>
-
                         </div>
+                            <div class="mt-5 d-flex justify-content-center">
+                                {{ $categories->links() }}
+                            </div>
                     </div>
                 </div>
             </div>

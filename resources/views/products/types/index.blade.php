@@ -18,7 +18,8 @@
                             <div class="text-muted text-center mt-2 mb-3">Добавить вид товара</div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" action="{{ route('types.store') }}" method="post" enctype="multipart/form-data">
+                            <form role="form" action="{{ route('types.store') }}" method="post"
+                                  enctype="multipart/form-data">
                                 @csrf
 
                                 <div class="form-group mb-3">
@@ -150,13 +151,19 @@
                                                     </a>
                                                     <div
                                                         class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
-                                                        <a class="dropdown-item" href="{{ route('types.edit', ['type' => $type->id]) }}">Изменить вид товара</a>
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('types.edit', ['type' => $type->id]) }}">Изменить
+                                                            вид товара</a>
                                                         <div class="" href="#">
-                                                            <form action="{{ route('types.destroy', ['type' => $type->id]) }}" method="post">
+                                                            <form
+                                                                action="{{ route('types.destroy', ['type' => $type->id]) }}"
+                                                                method="post">
                                                                 @method('DELETE')
                                                                 @csrf
-                                                                <button type="submit" class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
-                                                                    <span class="dropdown-item">Удалить вид товара</span>
+                                                                <button type="submit"
+                                                                        class="outline-none btn-link d-inline p-0 m-0 border-0 text-left w-100">
+                                                                    <span
+                                                                        class="dropdown-item">Удалить вид товара</span>
                                                                 </button>
                                                             </form>
                                                         </div>
@@ -169,7 +176,9 @@
                                     </tbody>
                                 </table>
                             </div>
-
+                        </div>
+                        <div class="mt-5 d-flex justify-content-center">
+                            {{ $types->links() }}
                         </div>
                     </div>
                 </div>

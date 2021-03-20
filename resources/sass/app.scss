@@ -13,3 +13,13 @@
         outline: 0 !important;
     }
 }
+
+.media  .avatar {
+    background-color: rgba(0,0,0,0);
+    background: none !important;
+    border-radius: 0;
+
+    * {
+        border-radius: 0;
+    }
+}
