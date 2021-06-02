@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\ProductFilter;
 use App\Http\Requests\ProductStoreRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Location;
@@ -10,6 +11,7 @@ use App\Models\ProductCategory;
 use App\Models\ProductType;
 use App\Models\Status;
 use Illuminate\Http\Request;
+use PhpParser\Builder;
 
 class ProductController extends Controller
 {
@@ -18,9 +20,10 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index()
+    public function index(ProductFilter $filters)
     {
-        $products = Product::with(['type', 'status', 'location'])->paginate(8);
+        $products = Product::with(['type', 'status', 'location'])
+            ->filter($filters)->paginate(8);
 
         $statuses = Status::all();
 
@@ -72,7 +75,19 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $product = Product::with(['type', 'location', 'status'])->findOrFail($id);
+
+        $statuses = Status::all();
+
+        $locations = Location::all();
+
+        $product_categories = ProductCategory::all();
+
+        $product_types = ProductType::all();
+
+        $data = compact(['product', 'statuses', 'locations', 'product_types', 'product_categories']);
+
+        return view('products.current.show', $data);
     }
 
     /**

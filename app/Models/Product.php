@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\ProductType;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Filters\QueryFilter;
+use Illuminate\Database\Eloquent\Builder;
 
 /**
  * App\Models\Product
@@ -39,6 +41,11 @@ class Product extends Model
         'location_id',
         'qty'
     ];
+
+    public function scopeFilter(Builder $builder, QueryFilter $filters)
+    {
+        return $filters->apply($builder);
+    }
 
     /**
      * Получить тип товара

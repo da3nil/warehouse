@@ -139,13 +139,13 @@
                                         <tr>
                                             <th scope="row">
                                                 <div class="media align-items-center">
-                                                    <a href="#" class="avatar rounded-circle mr-3">
+                                                    <a href="{{ route('products.show', ['product' => $product->id]) }}" class="avatar rounded-circle mr-3">
                                                         <img alt="Image placeholder"
                                                              src="{{ asset($product->type->img) }}">
                                                     </a>
                                                     <div class="media-body">
-                                                            <span
-                                                                class="name mb-0 text-sm">{{ $product->type->name }}</span>
+                                                            <a href="{{ route('products.show', ['product' => $product->id]) }}"
+                                                                class="name mb-0 text-sm">{{ $product->type->name }}</a>
                                                     </div>
                                                 </div>
                                             </th>

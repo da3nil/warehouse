@@ -77,6 +77,9 @@
                 </div>
             </form>
             <!-- Navigation -->
+            <div>
+                <h3 class="text-center">Меню</h3>
+            </div>
             <ul class="navbar-nav">
 {{--                <li class="nav-item">--}}
 {{--                    <a class="nav-link" href="{{ route('home') }}">--}}
@@ -94,12 +97,12 @@
                         <ul class="nav nav-sm flex-column">
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('products.index') }}">
-                                    {{ __('Список') }}
+                                    {{ __('Ходовые товары') }}
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="{{ route('types.index') }}">
-                                    {{ __('Виды') }}
+                                    {{ __('Прототипы товаров') }}
                                 </a>
                             </li>
                             <li class="nav-item">
