@@ -22,7 +22,7 @@ class ProductController extends Controller
      */
     public function index(ProductFilter $filters)
     {
-        $products = Product::with(['type', 'status', 'location'])
+        $products = Product::with(['status', 'location'])
             ->filter($filters)->paginate(8);
 
         $statuses = Status::all();
@@ -31,9 +31,7 @@ class ProductController extends Controller
 
         $product_categories = ProductCategory::all();
 
-        $product_types = ProductType::all();
-
-        $data = compact(['products', 'statuses', 'locations', 'product_types', 'product_categories']);
+        $data = compact(['products', 'statuses', 'locations', 'product_categories']);
 
         return view('products.current.index', $data);
     }
@@ -58,9 +56,19 @@ class ProductController extends Controller
     {
         $data = $request->all();
 
-        $model = Product::create($data);
+        $model = (new Product())->fill($data);
 
-        if (!$model->exists()) {
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
+
+            $path = $image->store('img', 'public');
+
+            $model->img = 'storage/' . $path;
+        }
+
+        $result = $model->save();
+
+        if (!$result) {
             return back()->withErrors(['msg' => 'Ошибка создания товара']);
         }
 
@@ -75,7 +83,7 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        $product = Product::with(['type', 'location', 'status'])->findOrFail($id);
+        $product = Product::with(['location', 'status'])->findOrFail($id);
 
         $statuses = Status::all();
 
@@ -83,9 +91,7 @@ class ProductController extends Controller
 
         $product_categories = ProductCategory::all();
 
-        $product_types = ProductType::all();
-
-        $data = compact(['product', 'statuses', 'locations', 'product_types', 'product_categories']);
+        $data = compact(['product', 'statuses', 'locations', 'product_categories']);
 
         return view('products.current.show', $data);
     }
@@ -98,7 +104,7 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        $product = Product::with(['type', 'location', 'status'])->findOrFail($id);
+        $product = Product::with(['location', 'status'])->findOrFail($id);
 
         $statuses = Status::all();
 
@@ -106,9 +112,8 @@ class ProductController extends Controller
 
         $product_categories = ProductCategory::all();
 
-        $product_types = ProductType::all();
 
-        $data = compact(['product', 'statuses', 'locations', 'product_types', 'product_categories']);
+        $data = compact(['product', 'statuses', 'locations', 'product_categories']);
 
         return view('products.current.edit', $data);
     }
@@ -122,17 +127,23 @@ class ProductController extends Controller
      */
     public function update(ProductUpdateRequest $request, $id)
     {
-        $product = Product::findOrFail($id);
+        $model= Product::findOrFail($id);
 
         $data = $request->all();
 
-        //dd($product);
+        $model->fill($data);
 
-        $product->update($data);
+        if ($request->hasFile('img')) {
+            $image = $request->file('img');
 
-        //dd($product);
+            $path = $image->store('img', 'public');
 
-        if (!$product->update($data)) {
+            $model->img = 'storage/' . $path;
+        }
+
+        $result = $model->save();
+
+        if (!$result) {
             return back()->withErrors(['msg' => 'Ошибка обновления товара']);
         }
 

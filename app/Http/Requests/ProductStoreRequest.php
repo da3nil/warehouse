@@ -24,7 +24,12 @@ class ProductStoreRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_id'       => 'required|int|exists:product_types,id',
+            'name'  => 'required|string',
+            'price' => 'required|int',
+            'category_id' => 'required|int|exists:product_categories,id',
+            'supplier_id'   => 'int|exists:suppliers,id',
+            'description'   => 'required|string',
+            'img'           => 'file|nullable',
             'qty'           => 'int',
             'location_id'   => 'required|int|exists:locations,id',
             'status_id'     => 'required|int|exists:statuses,id',

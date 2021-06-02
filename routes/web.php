@@ -38,6 +38,9 @@ Route::group(['middleware' => 'auth'], function () {
     // Categories
     Route::resource('categories', 'ProductCategoryController')->names('categories');
 
+    // Locations
+    Route::resource('locations', 'LocationController')->names('locations');
+
     // Types
     Route::resource('types', 'ProductTypeController')->names('types');
 });

@@ -47,29 +47,44 @@
                             </div>
                         @endif
 
-                        <form role="form" action="{{ route('products.update', ['product' => $product->id]) }}" method="post">
+                        <form role="form" action="{{ route('products.update', ['product' => $product->id]) }}" method="post" enctype="multipart/form-data">
                             @method('PUT')
                             @csrf
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Название</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <input type="text" class="form-control" step="1" value="{{ $product->name }}" name="name">
+                                </div>
+                            </div>
                             <div class="form-group mb-3">
                                 <label for="example-text-input" class="form-control-label">Категория</label>
                                 <div class="input-group input-group-merge input-group-alternative">
                                     <select v-on:change="setTypeProduct" class="form-control" name="category_id">
                                         @foreach($product_categories as $category)
-                                            @if(count($category->types) > 0)
-                                                <option @if($product->type->category->id === $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endif
+                                            <option @if($category->id === $product->category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
+
                             <div class="form-group mb-3">
-                                <label for="example-text-input" class="form-control-label">Вид товара</label>
+                                <label for="example-text-input" class="form-control-label">Цена (руб.)</label>
                                 <div class="input-group input-group-merge input-group-alternative">
-                                    <select id="form_product_type" class="form-control" name="type_id">
-                                        @foreach($product_types as $type)
-                                            <option @if($product->type->id === $type->id) selected @endif class="@if($type->id !== $product->type->id) d-none @endif" data-category-id="{{$type->category_id}}" value="{{ $type->id }}">{{ $type->name }}</option>
-                                        @endforeach
-                                    </select>
+                                    <input type="number" class="form-control" value="{{ $product->price }}" name="price">
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Описание</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <textarea class="form-control" name="description">{{ $product->description }}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="form-group mb-3">
+                                <label for="example-text-input" class="form-control-label">Изображение</label>
+                                <div class="input-group input-group-merge input-group-alternative">
+                                    <input type="file" class="form-control" name="img">
                                 </div>
                             </div>
                             <div class="form-group mb-3">

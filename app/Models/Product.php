@@ -39,22 +39,18 @@ class Product extends Model
         'type_id',
         'status_id',
         'location_id',
-        'qty'
+        'qty',
+        'name',
+        'price',
+        'img',
+        'category_id',
+        'supplier_id',
+        'description'
     ];
 
     public function scopeFilter(Builder $builder, QueryFilter $filters)
     {
         return $filters->apply($builder);
-    }
-
-    /**
-     * Получить тип товара
-     *
-     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
-     */
-    public function type()
-    {
-        return $this->belongsTo(ProductType::class, 'type_id', 'id')->with(['category']);
     }
 
     public function status()
@@ -69,7 +65,11 @@ class Product extends Model
 
     public function getTotalPriceAttribute()
     {
-        return $this->type->price * $this->qty;
+        return $this->price * $this->qty;
     }
 
+    public function category()
+    {
+        return $this->belongsTo(ProductCategory::class, 'category_id', 'id');
+    }
 }

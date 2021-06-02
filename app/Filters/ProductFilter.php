@@ -16,9 +16,7 @@ class ProductFilter extends QueryFilter
 
     public function search($keyword)
     {
-        return $this->builder->whereHas('type', function ($query) use ($keyword) {
-            $query->where('name', 'like', '%'.$keyword.'%');
-        });
+        return $this->builder->where('name', 'like', '%'.$keyword.'%');
     }
 
     public function price($order = 'asc')

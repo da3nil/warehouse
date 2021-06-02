@@ -52,10 +52,10 @@
                         <div class="container">
                             <div class="row">
                                 <div class="col-md-4">
-                                    <img class="img-fluid" src="{{ asset($product->type->img) }}" alt="">
+                                    <img class="img-fluid" src="{{ asset($product->img) }}" alt="">
                                 </div>
                                 <div class="col-md-8">
-                                    <h2>{{ $product->type->name }}</h2>
+                                    <h2>{{ $product->name }}</h2>
                                     <div>
                                         <span class="h4">Статус:</span>
                                         <span class="badge badge-dot ml-2 mr-4">
@@ -69,15 +69,11 @@
                                     </div>
                                     <div>
                                         <span class="h4">Категория:</span>
-                                        {{ $product->type->category->name }}
+                                        {{ $product->category->name }}
                                     </div>
                                     <div>
                                         <span class="h4">Стоимость: </span>
-                                        {{ $product->type->price }} руб.
-                                    </div>
-                                    <div class="">
-                                        <span class="h4">Прототип товара: </span>
-                                        <a href="{{ route('types.edit', ['type' => $product->type->id]) }}">Изменить</a>
+                                        {{ $product->price }} руб.
                                     </div>
                                     <div class="">
                                         <span class="h4">Точка назначения: </span>
@@ -87,7 +83,7 @@
                                         <span class="h4">Адрес доставки: </span>
                                         {{ $product->location->address }}
                                     </div>
-                                    <div class="description">{{ $product->type->description }}</div>
+                                    <div class="description">{{ $product->description }}</div>
                                 </div>
                             </div>
                         </div>

@@ -18,31 +18,44 @@
                             <div class="text-muted text-center mt-2 mb-3">Добавить товар</div>
                         </div>
                         <div class="card-body px-lg-5 py-lg-5">
-                            <form role="form" action="{{ route('products.store') }}" method="post">
+                            <form role="form" action="{{ route('products.store') }}" method="post" enctype="multipart/form-data">
                                 @csrf
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Название</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <input type="text" class="form-control" step="1" value="" name="name">
+                                    </div>
+                                </div>
+
                                 <div class="form-group mb-3">
                                     <label for="example-text-input" class="form-control-label">Категория</label>
                                     <div class="input-group input-group-merge input-group-alternative">
                                         <select v-on:change="setTypeProduct" class="form-control" name="category_id">
                                             @foreach($product_categories as $category)
-                                                @if(count($category->types) > 0)
-                                                    <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                                @endif
+                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
                                 </div>
+
                                 <div class="form-group mb-3">
-                                    <label for="example-text-input" class="form-control-label">Вид товара</label>
+                                    <label for="example-text-input" class="form-control-label">Цена (руб.)</label>
                                     <div class="input-group input-group-merge input-group-alternative">
-                                        <select id="form_product_type" class="form-control" name="type_id">
-                                            @foreach($product_types as $type)
-                                                <option
-                                                    class="@if($type->category_id !== $product_categories->first()->id) d-none @endif"
-                                                    data-category-id="{{$type->category_id}}"
-                                                    value="{{ $type->id }}">{{ $type->name }}</option>
-                                            @endforeach
-                                        </select>
+                                        <input type="number" class="form-control" value="" name="price">
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Описание</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <textarea class="form-control" name="description"></textarea>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mb-3">
+                                    <label for="example-text-input" class="form-control-label">Изображение</label>
+                                    <div class="input-group input-group-merge input-group-alternative">
+                                        <input type="file" class="form-control" value="" name="img">
                                     </div>
                                 </div>
                                 <div class="form-group mb-3">
@@ -127,10 +140,7 @@
                                         <th scope="col" class="sort" data-sort="name">{{ __('Количество') }}</th>
                                         <th scope="col" class="sort"
                                             data-sort="status">{{ __('Цена за единицу') }}</th>
-                                        <th scope="col" class="sort" data-sort="budget">{{ __('Сумма') }}</th>
                                         <th scope="col" class="sort" data-sort="completion">{{ __('Статус') }}</th>
-                                        <th scope="col" class="sort"
-                                            data-sort="completion">{{ __('Местоположение') }}</th>
                                         <th scope="col"></th>
                                     </tr>
                                     </thead>
@@ -140,12 +150,12 @@
                                             <th scope="row">
                                                 <div class="media align-items-center">
                                                     <a href="{{ route('products.show', ['product' => $product->id]) }}" class="avatar rounded-circle mr-3">
-                                                        <img alt="Image placeholder"
-                                                             src="{{ asset($product->type->img) }}">
+                                                        <img class="img-fluid" alt="Image placeholder"
+                                                             src="{{ asset($product->img) }}">
                                                     </a>
                                                     <div class="media-body">
                                                             <a href="{{ route('products.show', ['product' => $product->id]) }}"
-                                                                class="name mb-0 text-sm">{{ $product->type->name }}</a>
+                                                                class="name mb-0 text-sm">{{ $product->name }}</a>
                                                     </div>
                                                 </div>
                                             </th>
@@ -153,19 +163,13 @@
                                                 {{ $product->qty }} {{ __('шт.') }}
                                             </td>
                                             <td class="budget">
-                                                {{ $product->type->price }} {{ __('руб') }}
-                                            </td>
-                                            <td class="budget">
-                                                {{ $product->total_price}} {{ __('руб') }}
+                                                {{ $product->price }} {{ __('руб') }}
                                             </td>
                                             <td>
-                    <span class="badge badge-dot mr-4">
-                      <i class="bg-{{ $product->status->value }}"></i>
-                      <span class="status">{{ $product->status->name }}</span>
-                    </span>
-                                            </td>
-                                            <td class="budget">
-                                                {{ $product->location->name}}
+                                                <span class="badge badge-dot mr-4">
+                                                  <i class="bg-{{ $product->status->value }}"></i>
+                                                  <span class="status">{{ $product->status->name }}</span>
+                                                </span>
                                             </td>
                                             <td class="text-right">
                                                 <div class="dropdown">
@@ -175,6 +179,9 @@
                                                         <i class="fas fa-ellipsis-v"></i>
                                                     </a>
                                                     <div class="dropdown-menu dropdown-menu-right dropdown-menu-arrow">
+                                                        <a class="dropdown-item"
+                                                           href="{{ route('products.show', ['product' => $product->id]) }}">Открыть
+                                                            товар</a>
                                                         <a class="dropdown-item"
                                                            href="{{ route('products.edit', ['product' => $product->id]) }}">Изменить
                                                             товар</a>

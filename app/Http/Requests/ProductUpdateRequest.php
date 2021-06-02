@@ -24,7 +24,12 @@ class ProductUpdateRequest extends FormRequest
     public function rules()
     {
         return [
-            'type_id'       => 'int|exists:product_types,id',
+            'name'  => 'string',
+            'price' => 'int',
+            'category_id' => 'int|exists:product_categories,id',
+            'supplier_id'   => 'int|exists:suppliers,id',
+            'description'   => 'string',
+            'img'           => 'file|nullable',
             'qty'           => 'int',
             'location_id'   => 'int|exists:locations,id',
             'status_id'     => 'int|exists:statuses,id',
