@@ -20,6 +20,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereName($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductType[] $types
+ * @property-read int|null $types_count
+ * @method static \Illuminate\Database\Query\Builder|ProductCategory onlyTrashed()
+ * @method static \Illuminate\Database\Eloquent\Builder|ProductCategory whereDeletedAt($value)
+ * @method static \Illuminate\Database\Query\Builder|ProductCategory withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ProductCategory withoutTrashed()
  */
 class ProductCategory extends Model
 {

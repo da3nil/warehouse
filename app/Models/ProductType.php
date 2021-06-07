@@ -30,6 +30,13 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  * @method static \Illuminate\Database\Eloquent\Builder|ProductType whereSupplierId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|ProductType whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\ProductCategory $category
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\Product[] $products
+ * @property-read int|null $products_count
+ * @method static Builder|ProductType filter(\App\Filters\QueryFilter $filters)
+ * @method static \Illuminate\Database\Query\Builder|ProductType onlyTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ProductType withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|ProductType withoutTrashed()
  */
 class ProductType extends Model
 {

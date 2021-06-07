@@ -13,9 +13,9 @@
                         <div class="row align-items-center">
                             <h3 class="col-8 mb-0">{{ __('Список') }}</h3>
                             <div class="col-4 text-right">
-                                <button class="btn btn-sm btn-primary" data-toggle="modal"
-                                        data-target="#productModal">Добавить товар
-                                </button>
+{{--                                <button class="btn btn-sm btn-primary" data-toggle="modal"--}}
+{{--                                        data-target="#productModal">Добавить товар--}}
+{{--                                </button>--}}
                             </div>
                         </div>
                     </div>
@@ -65,7 +65,7 @@
 
                         <div class="row my-products">
                             @foreach($products as $product)
-                                <div class="col-md-3 pb-4">
+                                <div class="col-lg-3 col-md-4 col-sm-6 col pb-4">
                                     <div class="card">
                                         <img alt="Картинка" src="{{ asset($product->img) }}" class="card-img-top p-3">
                                         <div class="card-body">

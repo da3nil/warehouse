@@ -25,6 +25,12 @@ Route::get('/home', function () {
         ->route('products.index');
 })->name('home');
 
+Route::get('/cart/{id}/add', 'CartController@add')->name('cart.add');
+Route::delete('/cart/{rowId}/del', 'CartController@del')->name('cart.del');
+Route::get('/cart', 'CartController@index')->name('cart.index');
+Route::get('/cart/clear', 'CartController@clear')->name('cart.clear');
+Route::post('/cart/checkout', 'CartController@checkout')->name('cart.checkout');
+
 Route::group(['prefix' => 'user'], function () {
     Route::resource('products', 'Users\ProductController')->names('users.products');
 });

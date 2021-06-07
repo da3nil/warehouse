@@ -29,6 +29,26 @@ use Illuminate\Database\Eloquent\Builder;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereTypeId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property string $name
+ * @property int $price
+ * @property string $img
+ * @property int $category_id
+ * @property string $description
+ * @property \Illuminate\Support\Carbon|null $deleted_at
+ * @property-read \App\Models\ProductCategory $category
+ * @property-read mixed $total_price
+ * @property-read \App\Models\Location $location
+ * @property-read \App\Models\Status $status
+ * @method static Builder|Product filter(\App\Filters\QueryFilter $filters)
+ * @method static \Illuminate\Database\Query\Builder|Product onlyTrashed()
+ * @method static Builder|Product whereCategoryId($value)
+ * @method static Builder|Product whereDeletedAt($value)
+ * @method static Builder|Product whereDescription($value)
+ * @method static Builder|Product whereImg($value)
+ * @method static Builder|Product whereName($value)
+ * @method static Builder|Product wherePrice($value)
+ * @method static \Illuminate\Database\Query\Builder|Product withTrashed()
+ * @method static \Illuminate\Database\Query\Builder|Product withoutTrashed()
  */
 class Product extends Model
 {

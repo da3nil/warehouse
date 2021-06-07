@@ -26,9 +26,21 @@
             <!-- Navbar items -->
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="{{ route('users.products.index') }}">
+                        <i class="ni ni-shop"></i>
+                        <span class="nav-link-inner--text">{{ __('Товары') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link nav-link-icon" href="{{ route('cart.index') }}">
+                        <i class="ni ni-cart"></i>
+                        <span class="nav-link-inner--text">{{ __('Мой заказ') }}</span>
+                    </a>
+                </li>
+                <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('home') }}">
                         <i class="ni ni-planet"></i>
-                        <span class="nav-link-inner--text">{{ __('Админ-панель') }}</span>
+                        <span class="nav-link-inner--text">{{ __('Панель менеджера') }}</span>
                     </a>
                 </li>
                 <li class="nav-item">

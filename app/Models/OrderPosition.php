@@ -21,8 +21,17 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|OrderPosition whereProductId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|OrderPosition whereUpdatedAt($value)
  * @mixin \Eloquent
+ * @property-read \App\Models\Product $product
  */
 class OrderPosition extends Model
 {
-    //
+    protected $fillable = [
+        'order_id',
+        'product_id'
+    ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class, 'product_id');
+    }
 }
