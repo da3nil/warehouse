@@ -41,31 +41,27 @@
                         @endif
 
                         <div>
-                            <form action="">
-                                <div class="input-group mb-3">
-                                    <div class="input-group-prepend">
-                                        <span class="input-group-text border-primary bg-primary text-white"
-                                              type="button" id="button-addon1">Категория</span>
-                                        <select class="input-group-text outline-none border-primary text-primary"
-                                                style="border-right: 1px solid #5e72e4 !important;" name="" id="">
-                                            <option value="">Все категории</option>
-                                            @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <form action="{{ route('users.products.index') }}" method="GET">
+                                    <div class="input-group mb-3">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text border-primary bg-primary text-white" type="button" id="button-addon1">Категория</span>
+                                            <select name="category" class="input-group-text outline-none border-primary text-primary" style="border-right: 1px solid #5e72e4 !important;" name="" id="">
+                                                <option value="">Все категории</option>
+                                                @foreach($categories as $category)
+                                                    <option @if((int)Request::get('category') === $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
+                                                @endforeach
+                                            </select>
+                                        </div>
 
-                                    <input
-                                        style="padding: 10px 12px; border: 1px solid #5e72e4 !important; border-left: 1px solid #5e72e4 !important;"
-                                        type="text" class="form-control"
-                                        placeholder="Введите название товара или оставьте поле пустым"
-                                        aria-label="Example text with button addon" aria-describedby="button-addon1">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary">Найти</button>
+                                        <input style="padding: 10px 12px; border: 1px solid #5e72e4 !important; border-left: 1px solid #5e72e4 !important;"
+                                               type="text" name="search" class="form-control" placeholder="Введите название товара или оставьте поле пустым"
+                                               aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ Request::get('search') }}">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary">Найти</button>
+                                        </div>
                                     </div>
-                                </div>
-                            </form>
-                        </div>
+                                </form>
+                            </div>
 
                         <div class="card">
                             <div class="card-body">
@@ -93,17 +89,21 @@
                                         </div>
                                         <div class="description mb-5">{{ $product->description }}</div>
                                         <div>
-                                            <form method="GET" action="{{ route('cart.add', $product->id) }}">
-                                                <div class="input-group">
-                                                    <div class="input-group-prepend">
-                                                        <button type="submit" class="btn btn-primary">Добавить в заказ</button>
+                                            @if ($product->qty > 0)
+                                                <form method="GET" action="{{ route('cart.add', $product->id) }}">
+                                                    <div class="input-group">
+                                                        <div class="input-group-prepend">
+                                                            <button type="submit" class="btn btn-primary">Добавить в заказ</button>
+                                                        </div>
+                                                        <input style="padding: 10px 12px; width: 75px; max-width: 75px"
+                                                               name="qty"
+                                                               class="form-control" type="number" min="1" max="{{ $product->qty }}"
+                                                               value="1">
                                                     </div>
-                                                    <input style="padding: 10px 12px; width: 75px; max-width: 75px"
-                                                           name="qty"
-                                                           class="form-control" type="number" min="1" max="{{ $product->qty }}"
-                                                           value="1">
-                                                </div>
-                                            </form>
+                                                </form>
+                                            @else
+                                                <div class="alert alert-warning">Товара нет в наличии</div>
+                                            @endif
                                         </div>
                                     </div>
                                 </div>

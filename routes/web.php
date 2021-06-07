@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return redirect()
-        ->route('login');
+        ->route('users.products.index');
 });
 
 Auth::routes(['register' => false]);
 
 Route::get('/home', function () {
     return redirect()
-        ->route('products.index');
+        ->route('users.products.index');
 })->name('home');
 
 Route::get('/cart/{id}/add', 'CartController@add')->name('cart.add');
@@ -37,6 +37,7 @@ Route::group(['prefix' => 'user'], function () {
 
 Route::group(['middleware' => 'auth', 'prefix' => 'admin'], function () {
 	Route::resource('user', 'UserController', ['except' => ['show']]);
+    Route::resource('orders', 'OrderController')->names('orders');
 	Route::get('profile', ['as' => 'profile.edit', 'uses' => 'ProfileController@edit']);
 	Route::put('profile', ['as' => 'profile.update', 'uses' => 'ProfileController@update']);
 	Route::put('profile/password', ['as' => 'profile.password', 'uses' => 'ProfileController@password']);

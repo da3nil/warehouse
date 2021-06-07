@@ -23,7 +23,7 @@ class ProductController extends Controller
     public function index(ProductFilter $filters)
     {
         $products = Product::with(['status', 'location'])
-            ->filter($filters)->paginate(8);
+            ->filter($filters)->paginate(8)->appends(\request()->query());
 
         $statuses = Status::all();
 

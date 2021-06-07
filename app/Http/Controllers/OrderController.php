@@ -1,27 +1,22 @@
 <?php
 
-namespace App\Http\Controllers\Users;
+namespace App\Http\Controllers;
 
-use App\Filters\ProductFilter;
-use App\Http\Controllers\Controller;
-use App\Models\Product;
-use App\Models\ProductCategory;
+use App\Models\Order;
 use Illuminate\Http\Request;
 
-class ProductController extends Controller
+class OrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
-    public function index(ProductFilter $filter)
+    public function index()
     {
-        $products = Product::filter($filter)->paginate(16)->appends(\request()->query());
+        $orders = Order::paginate(8);
 
-        $categories = ProductCategory::all();
-
-        return view('user.products.index', compact('products', 'categories'));
+        return view('orders.index', compact('orders'));
     }
 
     /**
@@ -49,15 +44,13 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Http\Response|\Illuminate\View\View
      */
     public function show($id)
     {
-        $categories = ProductCategory::all();
+        $order = Order::with('orderPositions')->findOrFail($id);
 
-        $product = Product::findOrFail($id);
-
-        return view('user.products.show', compact('product', 'categories'));
+        return view('orders.show', compact('order'));
     }
 
     /**
@@ -87,10 +80,20 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function destroy($id)
     {
-        //
+        $order = Order::findOrFail($id);
+
+        $result = $order->delete();
+
+        if (!$result) {
+            return back()->withErrors(['msg' => 'Ошибка удаления заявки']);
+        }
+
+        return redirect()
+            ->route('orders.index')
+            ->with(['success' => 'Заявка успешно удалена']);
     }
 }

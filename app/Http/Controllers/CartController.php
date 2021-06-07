@@ -84,10 +84,16 @@ class CartController extends Controller
         $sum = 0;
 
         foreach (Cart::content() as $item) {
+            $product = Product::findOrFail($item->id);
+
+            $product->qty -= $item->qty;
+
             for ($i = 0; $i < $item->qty; $i++){
                 OrderPosition::make(['order_id' => $order->id, 'product_id' => $item->model->id])->save();
                 $sum += $item->model->price;
             }
+
+            $product->save();
         }
 
         $order->total = $sum;

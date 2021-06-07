@@ -36,11 +36,10 @@ class ProductCategoryObserver
      */
     public function deleted(ProductCategory $productCategory)
     {
-        $types = $productCategory->types;
+        $products = $productCategory->products;
 
-        foreach ($types as $type) {
-            $type->products()->delete();
-            $type->delete();
+        foreach ($products as $product) {
+            $product->delete();
         }
     }
 

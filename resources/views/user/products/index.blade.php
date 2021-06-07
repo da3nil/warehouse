@@ -41,21 +41,21 @@
                         @endif
 
                         <div>
-                            <form action="">
+                            <form action="{{ route('users.products.index') }}" method="GET">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text border-primary bg-primary text-white" type="button" id="button-addon1">Категория</span>
-                                        <select class="input-group-text outline-none border-primary text-primary" style="border-right: 1px solid #5e72e4 !important;" name="" id="">
+                                        <select name="category" class="input-group-text outline-none border-primary text-primary" style="border-right: 1px solid #5e72e4 !important;" name="" id="">
                                             <option value="">Все категории</option>
                                             @foreach($categories as $category)
-                                                <option value="{{ $category->id }}">{{ $category->name }}</option>
+                                                <option @if((int)Request::get('category') === $category->id) selected @endif value="{{ $category->id }}">{{ $category->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
 
                                     <input style="padding: 10px 12px; border: 1px solid #5e72e4 !important; border-left: 1px solid #5e72e4 !important;"
-                                           type="text" class="form-control" placeholder="Введите название товара или оставьте поле пустым"
-                                           aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                           type="text" name="search" class="form-control" placeholder="Введите название товара или оставьте поле пустым"
+                                           aria-label="Example text with button addon" aria-describedby="button-addon1" value="{{ Request::get('search') }}">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary">Найти</button>
                                     </div>

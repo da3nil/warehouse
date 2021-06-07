@@ -43,12 +43,14 @@
                         <span class="nav-link-inner--text">{{ __('Панель менеджера') }}</span>
                     </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link nav-link-icon" href="{{ route('login') }}">
-                        <i class="ni ni-key-25"></i>
-                        <span class="nav-link-inner--text">{{ __('Войти') }}</span>
-                    </a>
-                </li>
+                @guest()
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-icon" href="{{ route('login') }}">
+                            <i class="ni ni-key-25"></i>
+                            <span class="nav-link-inner--text">{{ __('Войти') }}</span>
+                        </a>
+                    </li>
+                @endguest
                 <li class="nav-item">
                     <a class="nav-link nav-link-icon" href="{{ route('profile.edit') }}">
                         <i class="ni ni-single-02"></i>
