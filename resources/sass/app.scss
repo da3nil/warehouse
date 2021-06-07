@@ -23,3 +23,15 @@
         border-radius: 0;
     }
 }
+
+.my-products .card-img-top {
+    width: 100%;
+    height: 12vw;
+    object-fit: contain;
+}
+
+.my-products .card-title {
+    height: 57px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
