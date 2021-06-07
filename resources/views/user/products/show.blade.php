@@ -3,7 +3,7 @@
 @section('content')
     @include('users.partials.header', [
         'title' => __('Складской учет спортивного магазина'),
-        'description' => __('Это страница товаров. Тут вы можете просмотреть текущий ассортимент товаров и сделать заказ.'),
+        'description' => __('Это страница товара. Тут вы можете просмотреть описание товара и заказать его.'),
     ])
     <div class="container-fluid mt--7">
         <div class="row">
@@ -44,8 +44,10 @@
                             <form action="">
                                 <div class="input-group mb-3">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text border-primary bg-primary text-white" type="button" id="button-addon1">Категория</span>
-                                        <select class="input-group-text outline-none border-primary text-primary" style="border-right: 1px solid #5e72e4 !important;" name="" id="">
+                                        <span class="input-group-text border-primary bg-primary text-white"
+                                              type="button" id="button-addon1">Категория</span>
+                                        <select class="input-group-text outline-none border-primary text-primary"
+                                                style="border-right: 1px solid #5e72e4 !important;" name="" id="">
                                             <option value="">Все категории</option>
                                             @foreach($categories as $category)
                                                 <option value="{{ $category->id }}">{{ $category->name }}</option>
@@ -53,9 +55,11 @@
                                         </select>
                                     </div>
 
-                                    <input style="padding: 10px 12px; border: 1px solid #5e72e4 !important; border-left: 1px solid #5e72e4 !important;"
-                                           type="text" class="form-control" placeholder="Введите название товара или оставьте поле пустым"
-                                           aria-label="Example text with button addon" aria-describedby="button-addon1">
+                                    <input
+                                        style="padding: 10px 12px; border: 1px solid #5e72e4 !important; border-left: 1px solid #5e72e4 !important;"
+                                        type="text" class="form-control"
+                                        placeholder="Введите название товара или оставьте поле пустым"
+                                        aria-label="Example text with button addon" aria-describedby="button-addon1">
                                     <div class="input-group-append">
                                         <button class="btn btn-primary">Найти</button>
                                     </div>
@@ -63,29 +67,40 @@
                             </form>
                         </div>
 
-                        <div class="row my-products">
-                            @foreach($products as $product)
-                                <div class="col-md-3 pb-4">
-                                    <div class="card">
-                                        <img alt="Картинка" src="{{ asset($product->img) }}" class="card-img-top p-3">
-                                        <div class="card-body">
-                                            <h5 class="card-title">{{ $product->name }}</h5>
-                                            <div style="height: 60px"
-                                                 class="d-flex justify-content-between align-items-center flex-wrap">
-                                                <h3 class="pr-2">{{ $product->price }} руб.</h3>
-                                                <h5>На складе: {{ $product->qty }} шт.</h5>
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-4 d-flex align-items-center">
+                                        <img class="img-fluid" src="{{ asset($product->img) }}" alt="">
+                                    </div>
+                                    <div class="col-md-8">
+                                        <h2>{{ $product->name }}</h2>
+                                        <div>
+                                            <span class="h4">Количество:</span>
+                                            {{ $product->qty }}
+                                        </div>
+                                        <div>
+                                            <span class="h4">Категория:</span>
+                                            {{ $product->category->name }}
+                                        </div>
+                                        <div>
+                                            <span class="h4">Стоимость: </span>
+                                            {{ $product->price }} руб.
+                                        </div>
+                                        <div class="mb-3">
+                                            <span class="h4">Адрес: </span>
+                                            {{ $product->location->address }}
+                                        </div>
+                                        <div class="description mb-5">{{ $product->description }}</div>
+                                        <div class="input-group">
+                                            <div class="input-group-prepend">
+                                                <a href="#" class="btn btn-primary">Добавить в заказ</a>
                                             </div>
-                                            <div class="text-center">
-                                                <a class="btn btn-primary" href="{{ route('users.products.show', $product->id) }}">Открыть</a>
-                                            </div>
+                                            <input style="padding: 10px 12px; width: 75px; max-width: 75px" class="form-control" type="number" max="15" value="1">
                                         </div>
                                     </div>
                                 </div>
-                            @endforeach
-                        </div>
-
-                        <div class="mt-5 d-flex justify-content-center">
-                            {{ $products->links() }}
+                            </div>
                         </div>
                     </div>
                 </div>

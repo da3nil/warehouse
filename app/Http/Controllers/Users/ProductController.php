@@ -52,7 +52,11 @@ class ProductController extends Controller
      */
     public function show($id)
     {
-        //
+        $categories = ProductCategory::all();
+
+        $product = Product::findOrFail($id);
+
+        return view('user.products.show', compact('product', 'categories'));
     }
 
     /**
